@@ -1,5 +1,6 @@
+import settings
 class StateManager:
-    def __init__(self, settings):
+    def __init__(self, settings: settings.Settings):
         self.states = {}
         self.settings = settings
         self.current_state = None
