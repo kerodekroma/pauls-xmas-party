@@ -14,7 +14,7 @@ class SpriteCard(pygame.sprite.Sprite):
     def handle_click(self, pos):
         if self.rect.collidepoint(pos):
             self.flip() 
-
+    
     def flip(self):
         self.is_flipped = not self.is_flipped
         self.image = self.front_image if self.is_flipped else self.back_image

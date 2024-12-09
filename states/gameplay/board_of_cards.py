@@ -11,6 +11,7 @@ class GamePlayBoardOfCards():
         self.cards = pygame.sprite.Group()
         img_card_front = './assets/img/card_front.png'
         img_card_back = './assets/img/card_back.png'
+        self.revealed_boxes = []
 
         # preparing the cards
         for row in range(settings.ROWS):
@@ -26,6 +27,8 @@ class GamePlayBoardOfCards():
                 pos = pygame.mouse.get_pos()
                 for card in self.cards:
                     card.handle_click(pos)
+                    if card.is_flipped:
+                        self.revealed_boxes(( card.x, card.y ))
 
     def render(self, screen):
         settings = self.settings
