@@ -22,15 +22,15 @@ class GamePlayBoardOfCards():
             './assets/img/card_front.png',
             './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
+            './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
+            './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
+            './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
+            './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png'
+            './assets/img/card_front_dem1.png',
         ]
         self.card_values = {
             './assets/img/card_front.png': '0',

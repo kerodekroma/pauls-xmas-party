@@ -3,7 +3,7 @@ import pygame
 
 
 class AIPlayer:
-    def __init__(self, difficulty='normal'):
+    def __init__(self, difficulty='beginner'):
         self.difficulty = difficulty
         self.memory = []  # Store the card values and positions
         self.thinking_start_time = 0
