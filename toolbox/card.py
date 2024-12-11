@@ -1,7 +1,7 @@
 import pygame
 
 class SpriteCard(pygame.sprite.Sprite):
-    def __init__(self, id, img_front_path, img_back_path, position, value):
+    def __init__(self, img_front_path, img_back_path, position, value):
         super().__init__()
         # images
         self.front_image = pygame.image.load(img_front_path).convert_alpha()
@@ -11,7 +11,6 @@ class SpriteCard(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=position)
         self.is_flipped = False
         self.is_matched = False
-        self.id = id
         self.value = value
 
     def flip(self):

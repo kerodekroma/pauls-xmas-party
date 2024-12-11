@@ -20,7 +20,7 @@ class GamePlayBoardOfCards():
         img_card_back = './assets/img/card_back.png'
         card_images = [
             './assets/img/card_front.png',
-            './assets/img/card_front.png',
+            './assets/img/card_front_dem1.png',
             './assets/img/card_front.png',
             './assets/img/card_front.png',
             './assets/img/card_front.png',
@@ -33,7 +33,8 @@ class GamePlayBoardOfCards():
             './assets/img/card_front.png'
         ]
         self.card_values = {
-            './assets/img/card_front.png': '0'
+            './assets/img/card_front.png': '0',
+            './assets/img/card_front_dem1.png': '1',
         }
         self.cards = self.generate_card_grid(
             settings, card_images, img_card_back)
@@ -54,8 +55,7 @@ class GamePlayBoardOfCards():
                     (settings.CARD_HEIGHT + settings.MARGIN) * row
                 img = pairs.pop()
                 value = self.card_values[img]
-                id = f'{x}_{y}_{value}'
-                card = SpriteCard(id, img, back_image, (x, y), value)
+                card = SpriteCard(img, back_image, (x, y), value)
                 result.append(card)
         return result
 
