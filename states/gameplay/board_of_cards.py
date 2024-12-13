@@ -11,6 +11,8 @@ class GamePlayBoardOfCards():
         self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.settings = settings
         self.flipped_cards = []
+        self.no_matches = []
+        self.flip_back_time = 0
 
         # setup of the ai
         self.ai_player = AIPlayer()
@@ -39,7 +41,7 @@ class GamePlayBoardOfCards():
         self.cards = self.generate_card_grid(
             settings, card_images, img_card_back)
         self.cards_group = pygame.sprite.Group(self.cards) 
-        self.matched_pairs = 0
+        self.player_matched_pairs = 0
         self.ai_matched_pairs = 0
 
     def generate_card_grid(self, settings, card_images, back_image):
@@ -68,7 +70,6 @@ class GamePlayBoardOfCards():
                 for index, card in enumerate(self.cards):
                     if card.rect.collidepoint(pos) and not card.is_flipped:
                         card.flip()
-                        self.flipped_cards.append(index)
                         break
 
                 # check for match when two cards are flipped
@@ -79,20 +80,21 @@ class GamePlayBoardOfCards():
 
                     if first_card.value == second_card.value:
                         first_card.is_matched = True
-                        second_card.is_matched = False
-                        self.matched_pairs += 1
-                        print("matched_pairs", self.matched_pairs)
+                        second_card.is_matched = True
+                        self.player_matched_pairs += 1
 
                     if first_card.value != second_card.value:
-                        first_card.flip()
-                        second_card.flip()
+                        pygame.time.wait(500)  # Pause for visual feedback
+                        # first_card.flip_back()
+                        # second_card.flip_back()
+                        self.flip_back_time = pygame.time.get_ticks() + 1000
+                        self.no_matches = [first_card, second_card]
 
                     self.flipped_cards.clear()
 
-                    print("AI TURN!")
                     # ai's turn
-                    self.is_ai_player_turn = True
-                    self.ai_player.action_step = 0
+                    # self.is_ai_player_turn = True
+                    # self.ai_player.action_step = 0
 
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -105,4 +107,10 @@ class GamePlayBoardOfCards():
                 self.ai_player.action_step == 0
                 self.is_ai_player_turn = False
 
+        if len( self.no_matches ):
+            for card in self.no_matches:
+                card.flip_back()
+            self.no_matches = []
+
+        self.cards_group.update()
         self.cards_group.draw(screen)

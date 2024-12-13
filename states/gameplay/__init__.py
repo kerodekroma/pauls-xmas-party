@@ -14,8 +14,12 @@ class GamePlayState(game_state.GameState):
         unit = settings.UNIT
         self.palette = settings.palette
         self.angle = 0
-        self.header = GamePlayHeader(
-            (settings.WINDOW_WIDTH, 6 * unit), (0, 0), self.palette[3])
+        self.header = GamePlayHeader( 
+            state_manager,
+            (settings.WINDOW_WIDTH, 6 * unit), 
+            (0, 0), 
+            self.palette[3]
+        )
         self.board = GamePlayBoardOfCards(
             (settings.WINDOW_WIDTH, 10), (0, settings.HEADER_HEIGHT), settings)
 
@@ -30,14 +34,15 @@ class GamePlayState(game_state.GameState):
         screen.fill(self.palette[8])
 
         # header
-        self.header.render(screen)
+        self.header.render(screen, (self.board.player_matched_pairs, self.board.ai_matched_pairs))
+
         # board
         self.board.render(screen)
 
-        pixel_font = state_manager.settings.font['pixel']
-        text_content = f"""
-            IAs turn! {self.board.is_ai_player_turn}
-        """
-        text_surface = pixel_font.render(text_content, True, self.palette[2])
-        text_rect = text_surface.get_rect(center=(200, 50))
-        screen.blit(text_surface, text_rect)
+        # pixel_font = state_manager.settings.font['pixel']
+        # text_content = f"""
+        #     IAs turn! {self.board.is_ai_player_turn}
+        # """
+        # text_surface = pixel_font.render(text_content, True, self.palette[2])
+        # text_rect = text_surface.get_rect(center=(200, 50))
+        # screen.blit(text_surface, text_rect)
