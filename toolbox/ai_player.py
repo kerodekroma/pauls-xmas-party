@@ -10,6 +10,7 @@ class AIPlayer:
         self.action_step = 0
         self.selected_cards = []
         self.thinking_delay = 1000  # Default 1-second delay between actions
+        self.matched_pairs = 0
 
     def start_turn(self, card_group):
         """Start the AI's turn."""
@@ -38,6 +39,7 @@ class AIPlayer:
             # Step 3: Check match or reset
             if self.selected_cards[0].value == self.selected_cards[1].value:
                 print("AI found a match!")
+                self.matched_pairs += 100
             else:
                 # Flip the cards back
                 self.selected_cards[0].flip()
@@ -50,7 +52,8 @@ class AIPlayer:
 
     def make_move(self, card_group):
         """Simulate AI picking two cards based on difficulty."""
-        visible_cards = [card for card in card_group if not card.is_flipped and not card.is_matched]
+        visible_cards = [
+            card for card in card_group if not card.is_flipped and not card.is_matched]
 
         if self.difficulty == "beginner":
             # Completely random moves
@@ -79,7 +82,8 @@ class AIPlayer:
             card for card in card_group if card.is_flipped and not card.is_matched]
         for card in memory:
             # Check if a pair exists
-            match = next((c for c in memory if c != card and c.value == card.value), None)
+            match = next((c for c in memory if c !=
+                         card and c.value == card.value), None)
             if match:
                 return [card, match]
         return None

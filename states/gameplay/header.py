@@ -1,5 +1,6 @@
 import pygame
 
+from toolbox import font
 class GamePlayHeader():
     def __init__(self, state_manager, size, position, color):
         self.size = size
@@ -15,20 +16,9 @@ class GamePlayHeader():
 
     def render(self, screen, score):
         pygame.draw.rect(screen, self.color, self.rect)
-
-        print("score", score)
-        # player score
-        text_content = f"""
-            SCORE: {score[0]}
-        """
-        text_surface = self.pixel_font.render(text_content, True, self.palette[2])
-        text_rect = text_surface.get_rect(topleft=(self.unit, 50))
+        text_content = f"""MY SCORE: {score[0]}"""
+        font.render_pixel_text(self.pixel_font, (self.unit * 14, self.unit * 2), text_content, self.palette[2], screen)
 
         # ai score
-        text_content = f"""
-            AI: {score[1]}
-        """
-        text_surface = self.pixel_font.render(text_content, True, self.palette[2])
-        text_rect = text_surface.get_rect(topleft=(self.unit, self.screen_width - self.unit))
-
-        screen.blit(text_surface, text_rect)
+        text_content = f"""RIVAL SCORE: {score[1]}"""
+        font.render_pixel_text(self.pixel_font, (self.screen_width - self.unit * 38, self.unit * 2), text_content, self.palette[2], screen)

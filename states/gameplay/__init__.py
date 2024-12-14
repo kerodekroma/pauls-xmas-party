@@ -39,10 +39,17 @@ class GamePlayState(game_state.GameState):
         # board
         self.board.render(screen)
 
-        # pixel_font = state_manager.settings.font['pixel']
-        # text_content = f"""
-        #     IAs turn! {self.board.is_ai_player_turn}
-        # """
-        # text_surface = pixel_font.render(text_content, True, self.palette[2])
-        # text_rect = text_surface.get_rect(center=(200, 50))
-        # screen.blit(text_surface, text_rect)
+        # won
+        if self.board.player_matched_pairs > self.board.ai_matched_pairs:
+            # show dialog as GB
+            pass
+
+        # lose the player
+        if self.board.player_matched_pairs < self.board.ai_matched_pairs:
+            # show dialog as GB
+            pass
+
+        # draw
+        if self.board.player_matched_pairs == self.board.ai_matched_pairs:
+            # show dialog as GB
+            pass
