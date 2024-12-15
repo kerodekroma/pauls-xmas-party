@@ -27,6 +27,56 @@ jobs:
           echo "DONE"
           zip -j -r paul_xmas_party.zip build/web
 
+      - name: Generate Git Tag
+        id: generate_tag
+        run: |
+          set -ex  # Exit on error (-e) and print each command (-x)
+
+          echo "Starting tag generation..."
+
+          VERSION_PREFIX="v"
+          VERSION_MAJOR_MINOR="1.0"
+
+          echo "START => Fetching all tags from the remote repository..."
+          git fetch --tags
+          echo "END => Fetching all tags from the remote repository..."
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to fetch tags"
+            exit 1
+          fi
+
+          echo "Finding the latest patch version for ${VERSION_MAJOR_MINOR}..."
+          VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+          
+          if [ $? -ne 0 ]; then
+            echo "Warning: Failed to retrieve the latest patch version. Setting patch version to 0."
+            VERSION_PATCH=0
+          fi
+
+          echo "Current patch version: $VERSION_PATCH"
+
+          # Increment the patch version or start at 0 if none exists
+          if [ -z "$VERSION_PATCH" ]; then
+            VERSION_PATCH=0
+          else
+            VERSION_PATCH=$((VERSION_PATCH + 1))
+          fi
+
+          echo "New patch version: $VERSION_PATCH"
+
+          PYPI_TAG="${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
+          NEW_TAG="${VERSION_PREFIX}${PYPI_TAG}"
+
+          echo "Generated new tag: $NEW_TAG"
+
+          # Set environment variables for use in later steps
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+          # Check if the environment variables are set correctly
+          echo "Environment variable NEW_TAG: ${NEW_TAG}"
+
+          echo "Tag generation completed successfully."
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
