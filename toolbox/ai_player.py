@@ -38,7 +38,9 @@ class AIPlayer:
         elif self.action_step == 3 and elapsed_time > self.thinking_delay:
             # Step 3: Check match or reset
             if self.selected_cards[0].value == self.selected_cards[1].value:
-                print("AI found a match!")
+                # AI found a match!
+                self.selected_cards[0].is_matched = True
+                self.selected_cards[1].is_matched = True
                 self.matched_pairs += 100
             else:
                 # Flip the cards back

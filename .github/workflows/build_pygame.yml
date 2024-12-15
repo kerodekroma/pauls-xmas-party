@@ -1,0 +1,35 @@
+name: Build this project using Pygbag
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: building project
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.3.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: build
+        run: |
+          echo "Installing pygbag"
+          python3 -m pip install pygbag
+          echo "pygbag success!"
+          echo "building the project"
+          python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
+          echo "DONE"
+          zip -j -r paul_xmas_party.zip build/web
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GH_CREDENTIALS }}
+          tag: ${{ env.NEW_TAG }}
+          artifacts: paul_xmas_party.zip

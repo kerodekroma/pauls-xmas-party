@@ -11,11 +11,15 @@ class GamePlayBoardOfCards():
         self.color = (255, 102, 0)
         self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.settings = settings
+        self.setup(settings)
+
+    def setup(self, settings):
         self.flipped_cards = []
 
         self.not_matched = []
         self.current_not_matched_time = 0
         self.flip_back_delay_time = 400
+        self.is_everything_visible = False
 
         # setup of the ai
         self.ai_player = AIPlayer()
@@ -63,7 +67,7 @@ class GamePlayBoardOfCards():
 
     def handle_events(self, event, state_manager):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1 and not self.is_ai_player_turn:
+            if event.button == 1 and self.is_ai_player_turn == False:
                 pos = pygame.mouse.get_pos()
 
                 # check for card click using collision detection
@@ -75,7 +79,6 @@ class GamePlayBoardOfCards():
 
                 # check for match when two cards are flipped
                 if len(self.flipped_cards) == 2 and self.is_ai_player_turn == False:
-                    pygame.time.wait(500)  # Pause for visual feedback
                     first_card = self.cards[self.flipped_cards[0]]
                     second_card = self.cards[self.flipped_cards[1]]
 
@@ -89,6 +92,8 @@ class GamePlayBoardOfCards():
                         self.current_not_matched_time = pygame.time.get_ticks()
                         self.not_matched = [first_card, second_card]
 
+                self.is_everything_visible = self.check_all_is_visible()
+
     # ai's turn
     def start_ai_player_turn(self):
         self.not_matched = []
@@ -96,18 +101,24 @@ class GamePlayBoardOfCards():
         self.is_ai_player_turn = True
         self.ai_player.action_step = 0
 
+    def check_all_is_visible(self):
+        matched_cards = [
+            card for card in self.cards if card.is_matched]
+        return len(matched_cards) == len(self.cards)
+
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
 
         current_time = pygame.time.get_ticks()
         elapsed_time = current_time - self.current_not_matched_time
+
         if len(self.not_matched) and elapsed_time > self.flip_back_delay_time:
             self.current_not_matched_time = 0
             for card in self.not_matched:
                 card.flip()
             self.start_ai_player_turn()
 
-        if self.is_ai_player_turn:
+        if self.is_ai_player_turn and not self.is_everything_visible:
             if self.ai_player.action_step == 0:
                 self.ai_player.start_turn(self.cards)
 
@@ -115,6 +126,7 @@ class GamePlayBoardOfCards():
                 self.ai_matched_pairs = self.ai_player.matched_pairs
                 self.ai_player.action_step == 0
                 self.is_ai_player_turn = False
+                self.is_everything_visible = self.check_all_is_visible()
 
         self.cards_group.update()
         self.cards_group.draw(screen)

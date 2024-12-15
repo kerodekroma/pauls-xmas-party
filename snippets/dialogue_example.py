@@ -1,7 +1,8 @@
 
+# python -m snippets.dialogue_example.py
 import pygame
 
-from toolbox.dialogue_system import DialogueSystem 
+from toolbox.dialogue_system import DialogueSystem
 
 # Initialize Pygame
 pygame.init()
@@ -16,7 +17,7 @@ avatar_img = pygame.image.load("./assets/img/flag32x32.png")
 avatar_img = pygame.transform.scale(avatar_img, (64, 64))
 
 # Dialogue system instance
-dialogue_system = DialogueSystem(screen, WIDTH, HEIGHT)
+dialogue_system = DialogueSystem(WIDTH, HEIGHT)
 dialogue_system.set_dialogue([
     {"avatar": "avatar.png", "text": "Welcome to the Christmas party!"},
     {"avatar": "avatar.png", "text": "Get ready for a festive night!"}
@@ -29,7 +30,7 @@ while running:
     screen.fill((0, 0, 0))  # Clear the screen
 
     # Update and draw dialogue
-    dialogue_system.update()
+    dialogue_system.update(screen)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
