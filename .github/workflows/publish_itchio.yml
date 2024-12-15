@@ -19,7 +19,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: HTML
-          ITCH_GAME: py-thumbpad
+          ITCH_GAME: pauls-xmas-party
           ITCH_USER: kerodekroma
           PACKAGE: paul_xmas_party.zip
           VERSION: ${{ steps.download-html.outputs.version }}
