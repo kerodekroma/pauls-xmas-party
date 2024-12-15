@@ -13,12 +13,13 @@ class GamePlayHeader():
         self.screen_width = settings.WINDOW_WIDTH
         self.palette = settings.palette
         self.pixel_font = settings.font['pixel']
+        self.text_color = self.palette[9]
 
     def render(self, screen, score):
         pygame.draw.rect(screen, self.color, self.rect)
         text_content = f"""MY SCORE: {score[0]}"""
-        font.render_pixel_text(self.pixel_font, (self.unit * 14, self.unit * 2), text_content, self.palette[2], screen)
+        font.render_pixel_text(self.pixel_font, (self.unit * 14, self.unit * 2), text_content, self.text_color, screen)
 
         # ai score
         text_content = f"""RIVAL SCORE: {score[1]}"""
-        font.render_pixel_text(self.pixel_font, (self.screen_width - self.unit * 38, self.unit * 2), text_content, self.palette[2], screen)
+        font.render_pixel_text(self.pixel_font, (self.screen_width - self.unit * 38, self.unit * 2), text_content, self.text_color, screen)
