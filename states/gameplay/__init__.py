@@ -7,6 +7,7 @@ from toolbox.dialogue_system import DialogueSystem
 from states.gameplay.header import GamePlayHeader
 from states.gameplay.board_of_cards import GamePlayBoardOfCards
 
+from states import GAME_STATES
 
 class GamePlayState(game_state.GameState):
     def __init__(self, state_manager):
@@ -19,7 +20,7 @@ class GamePlayState(game_state.GameState):
             state_manager,
             (self.settings.WINDOW_WIDTH, 6 * unit),
             (0, 0),
-            self.palette[3]
+            self.palette[52]
         )
         self.board = GamePlayBoardOfCards(
             (self.settings.WINDOW_WIDTH, 10), (0, self.settings.HEADER_HEIGHT), self.settings)
@@ -37,14 +38,14 @@ class GamePlayState(game_state.GameState):
 
     def handle_events(self, event, state_manager):
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE and state_manager.current_state_name == 'game_play':
-                state_manager.set_state('main_menu')
+            if event.key == pygame.K_SPACE and state_manager.current_state_name == GAME_STATES.GAMEPLAY:
+                state_manager.set_state(GAME_STATES.MAIN_MENU)
 
         self.board.handle_events(event, state_manager)
         self.dialogue.handle_event(event)
 
     def render(self, screen, state_manager):
-        screen.fill(self.palette[8])
+        screen.fill(self.palette[52])
 
         # header
         self.header.render(

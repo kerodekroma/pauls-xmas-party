@@ -8,9 +8,9 @@ class GamePlayBoardOfCards():
     def __init__(self, size, position, settings):
         self.size = size
         self.position = position
-        self.color = (255, 102, 0)
-        self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.settings = settings
+        self.bg_color = settings.palette[46]
+        self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.setup(settings)
 
     def setup(self, settings):
@@ -107,7 +107,7 @@ class GamePlayBoardOfCards():
         return len(matched_cards) == len(self.cards)
 
     def render(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+        pygame.draw.rect(screen, self.bg_color, self.rect)
 
         current_time = pygame.time.get_ticks()
         elapsed_time = current_time - self.current_not_matched_time
