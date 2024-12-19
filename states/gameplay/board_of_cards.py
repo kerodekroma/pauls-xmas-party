@@ -26,21 +26,9 @@ class GamePlayBoardOfCards():
         self.is_ai_player_turn = False
 
         # preparing the cards
-        img_card_back = './assets/img/card_back.png'
-        card_images = [
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front.png',
-            './assets/img/card_front_dem1.png',
-            './assets/img/card_front_dem1.png',
-            './assets/img/card_front_dem1.png',
-            './assets/img/card_front_dem1.png',
-        ]
-        self.card_values = {
-            './assets/img/card_front.png': '0',
-            './assets/img/card_front_dem1.png': '1',
-        }
+        img_card_back = self.settings.CARD_BACK
+        card_images = self.settings.get_card_img_by_level(4)
+        self.card_values = self.settings.CARD_VALUES
         self.cards = self.generate_card_grid(
             settings, card_images, img_card_back)
         self.cards_group = pygame.sprite.Group(self.cards)

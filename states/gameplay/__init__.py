@@ -9,6 +9,7 @@ from states.gameplay.board_of_cards import GamePlayBoardOfCards
 
 from states import GAME_STATES
 
+
 class GamePlayState(game_state.GameState):
     def __init__(self, state_manager):
         super().__init__(state_manager=state_manager)
@@ -28,13 +29,33 @@ class GamePlayState(game_state.GameState):
         # Load avatar
         avatar_img = pygame.image.load("./assets/img/flag32x32.png")
         avatar_img = pygame.transform.scale(avatar_img, (64, 64))
-        self.dialogue = DialogueSystem(
+
+        # dialogs
+        self.dialogue_win = DialogueSystem(
             self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
-        self.dialogue.set_dialogue([
-            {"avatar": "avatar.png", "text": "Welcome to the Christmas party!"},
-            {"avatar": "avatar.png", "text": "Get ready for a festive night!"}
-        ])
-        self.dialogue.avatar = avatar_img  # Set avatar
+        # dialoguess
+        self.win_dialogue = [
+            {"avatar": "avatar.png", "text": "You WIN!"},
+            {"avatar": "avatar.png", "text": "time for another match!"}
+        ]
+        self.dialogue_win.set_dialogue(self.win_dialogue)
+
+        self.dialogue_lose = DialogueSystem(
+            self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
+        self.lose_dialogue = [
+            {"avatar": "avatar.png", "text": "You LOSE!"},
+            {"avatar": "avatar.png", "text": "Try again!"}
+        ]
+        self.dialogue_lose.set_dialogue(self.lose_dialogue)
+
+        self.dialogue_draw = DialogueSystem(
+            self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
+        self.draw_dialogue = [
+            {"avatar": "avatar.png", "text": "What a match!"},
+            {"avatar": "avatar.png", "text": "Get ready for a next round!"}
+
+        ]
+        self.dialogue_draw.set_dialogue(self.draw_dialogue)
 
     def handle_events(self, event, state_manager):
         if event.type == pygame.KEYUP:
@@ -42,7 +63,10 @@ class GamePlayState(game_state.GameState):
                 state_manager.set_state(GAME_STATES.MAIN_MENU)
 
         self.board.handle_events(event, state_manager)
-        self.dialogue.handle_event(event)
+
+        self.dialogue_win.handle_event(event)
+        self.dialogue_lose.handle_event(event)
+        self.dialogue_draw.handle_event(event)
 
     def render(self, screen, state_manager):
         screen.fill(self.palette[52])
@@ -55,20 +79,24 @@ class GamePlayState(game_state.GameState):
         self.board.render(screen)
 
         if self.board.is_everything_visible:
-            self.dialogue.update(screen)
             # TODO
             # self.board.setup(self.settings)
             # won
             if self.board.player_matched_pairs > self.board.ai_matched_pairs:
-                # show dialog as GB
-                print("you won!!")
-
+                self.dialogue_win.update(screen)
+                if not self.dialogue_win.show_dialogue:
+                    self.board.setup(self.settings)
             # lose
             if self.board.player_matched_pairs < self.board.ai_matched_pairs:
                 # show dialog as GB
-                print("you lose!!")
+                self.dialogue_lose.update(screen)
+                if not self.dialogue_lose.show_dialogue:
+                    self.board.setup(self.settings)
 
             # drawn
             if self.board.player_matched_pairs == self.board.ai_matched_pairs:
                 # show dialog as GB
-                print("draw!!")
+                print("Draw!")
+                self.dialogue_draw.update(screen)
+                if not self.dialogue_draw.show_dialogue:
+                    self.board.setup(self.settings)

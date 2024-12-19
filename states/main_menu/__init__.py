@@ -13,7 +13,7 @@ class MainMenuState(game_state.GameState):
         self.unit = self.settings.UNIT
         self.default_btn_bg_color = self.settings.palette[62]
         self.start_btn = singl_button.SinglSquareButton(
-            (self.settings.WINDOW_WIDTH // 2 - self.unit * 2, self.unit * 50),
+            (self.settings.WINDOW_WIDTH // 2 - self.unit * 10, self.unit * 60),
             {
                 "height": self.unit * 8,
                 "width": self.unit * 20,
@@ -23,6 +23,7 @@ class MainMenuState(game_state.GameState):
             }
         )
         self.is_pressed_start = False
+        self.intro_image = pygame.image.load( self.settings.IMG_INTRO )
 
     def handle_events(self, event, state_manager):
         if event.type == pygame.KEYUP:
@@ -34,12 +35,7 @@ class MainMenuState(game_state.GameState):
     def render(self, screen, state_manager):
         pixel_font = self.settings.font['pixel']
         palette = state_manager.settings.palette
-        text_content = f"""
-            MENU GAME
-        """
-        text_surface = pixel_font.render(text_content, True, palette[8])
-        text_rect = text_surface.get_rect(center=(state_manager.settings.WINDOW_WIDTH/2, 50))
-        screen.blit(text_surface, text_rect)
+        screen.blit(self.intro_image, (0, 0))
 
         if self.start_btn.current_event == PY_SINGLE_BUTTON_Events.PRESSED:
             self.start_btn.options['bg_color'] = palette[30]
