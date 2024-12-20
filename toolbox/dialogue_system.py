@@ -18,7 +18,7 @@ class DialogueSystem:
         self.avatar = None  # Placeholder for the current avatar image
         self.font = pixel_font()  # Customize with a retro font
         self.buttons = [
-            pygame.Rect(width - 150, height - 60, 100,
+            pygame.Rect(width - 190, height - 60, 170,
                         40)  # Example button ("Next")
         ]
 
@@ -46,10 +46,6 @@ class DialogueSystem:
         pygame.draw.rect(screen, (50, 50, 50), self.dialogue_rect)
         pygame.draw.rect(screen, (255, 255, 255), self.dialogue_rect, 2)
 
-        # Draw the avatar
-        if self.avatar:
-            screen.blit(self.avatar, (self.dialogue_rect.x +
-                        10, self.dialogue_rect.y + 10))
 
         # Draw the text
         if self.text_index < len(self.dialogue):
@@ -61,12 +57,21 @@ class DialogueSystem:
                 self.current_text, True, (255, 255, 255))
             screen.blit(text_surface, (self.dialogue_rect.x +
                         80, self.dialogue_rect.y + 20))
+            if "avatar" in self.dialogue[self.text_index]:
+                avatar = self.dialogue[self.text_index]["avatar"]
+                screen.blit(avatar, (self.dialogue_rect.x + 10, self.dialogue_rect.y + 10))
+            # Draw the avatar by default
+            if not "avatar" in self.dialogue[self.text_index] and self.avatar:
+                screen.blit(self.avatar, (self.dialogue_rect.x +
+                        10, self.dialogue_rect.y + 10))
+
 
         # Draw buttons
         for button in self.buttons:
             pygame.draw.rect(screen, (255, 255, 255), button)
-            button_text = self.font.render("Next", True, (0, 0, 0))
-            screen.blit(button_text, (button.x + 10, button.y + 10))
+            button_text = self.font.render("Next [Enter]", True, (0, 0, 0))
+            button_rect = button_text.get_rect(topleft=(button.x + 8, button.y + 8))
+            screen.blit(button_text, button_rect)
 
     def update(self, screen):
         """Update the dialogue box animation and drawing."""
@@ -93,3 +98,8 @@ class DialogueSystem:
         self.letter_index = 0  # Reset for the new text
         if self.text_index >= len(self.dialogue):  # End of dialogue
             self.show_dialogue = False
+
+    def prepare_avatar(self, img_path):
+        avatar_img = pygame.image.load(img_path)
+        avatar_img = pygame.transform.scale(avatar_img, (64, 64))
+        return avatar_img

@@ -64,13 +64,16 @@ class Settings:
         self.MUSHROOM_NAMES = ['MUSHY KIDO', 'MR MUFFIN', 'MURNOLD CHAD', 'GRAND MUSHMA']
         # global state
         self.game_data = {
-            'level': 1,
+            'level': 0,
+            'max_level': 4
         } 
 
         # player
-        self.data_player = {
-            'score': 0,
-        } 
+        # self.data_player = {
+        #     'score': 0,
+        #     'loses': 0,
+        #     'draws': 0
+        # } 
 
         # rival
         self.data_mushroom = {
@@ -93,7 +96,9 @@ class Settings:
         return (imgs * 4)[:8]
 
     def mushroom_by_level(self, num_level):
-        return {'img': self.MUSHROOM_IMAGES[num_level - 1], 'name': self.MUSHROOM_NAMES[num_level - 1]}
+        if num_level < self.game_data['max_level']:
+            return {'img': self.MUSHROOM_IMAGES[num_level], 'name': self.MUSHROOM_NAMES[num_level]}
+        return {'img': './assets/img/paul_avatar.png', 'name': 'Paul'}
 
     def bg_by_level(self, num_level=-1):
         file_name = 'pauls-party'
@@ -106,3 +111,43 @@ class Settings:
         if num_level == 3:
             return f'./assets/img/{file_name}-04.png'
         return f'./assets/img/{file_name}-05.jpg'
+
+    def get_dialogue_by_level(self, num_level=-1):
+        if num_level == 0:
+            return  {
+                "prev": [
+                    {"text": "Think you can match my memory, Paul? Prove it!"}
+                ],
+                "post": [
+                    {"text": "Okay, you win! Let's start with the tree."},
+                    {"text": "Let me introduce to you my friend to play too"},
+                ]
+            }
+        if num_level == 1:
+            return {
+                "prev": [
+                    {"text": "I’ve got the next challenge for you. Let’s see!"}
+                ],
+                "post": [
+                    {"text": "You’re good, Paul! The tree’s in place."}
+                ]
+            }
+        if num_level == 2:
+            return {
+                "prev": [
+                    {"text": "Adding people is no easy feat. Are you ready?"}
+                ],
+                "post": [
+                    {"text": "Nice one! The valley feels livelier now."}
+                ]
+            }
+        if num_level == 3:
+            return {
+                "prev": [
+                    {"text": "Let’s test your skills again. People need cheering!"}
+                ],
+                "post": [
+                    {"text": "Great job! Everyone’s ready for more fun."}
+                ]
+            }
+        return {"prev":[], "post":[]}
