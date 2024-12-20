@@ -27,13 +27,12 @@ class MainMenuState(game_state.GameState):
 
     def handle_events(self, event, state_manager):
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE and state_manager.current_state_name == GAME_STATES.MAIN_MENU:
+            if event.key == pygame.K_RETURN and state_manager.current_state_name == GAME_STATES.MAIN_MENU:
                 state_manager.set_state(GAME_STATES.GAMEPLAY)
 
         self.start_btn.listen_events(event)
 
     def render(self, screen, state_manager):
-        pixel_font = self.settings.font['pixel']
         palette = state_manager.settings.palette
         screen.blit(self.intro_image, (0, 0))
 

@@ -13,7 +13,7 @@ class GamePlayBoardOfCards():
         self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.setup(settings)
 
-    def setup(self, settings):
+    def setup(self, settings, level=1):
         self.flipped_cards = []
 
         self.not_matched = []
@@ -27,7 +27,7 @@ class GamePlayBoardOfCards():
 
         # preparing the cards
         img_card_back = self.settings.CARD_BACK
-        card_images = self.settings.get_card_img_by_level(4)
+        card_images = self.settings.get_card_img_by_level(level)
         self.card_values = self.settings.CARD_VALUES
         self.cards = self.generate_card_grid(
             settings, card_images, img_card_back)
