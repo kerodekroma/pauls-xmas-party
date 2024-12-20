@@ -116,29 +116,29 @@ class Settings:
         if num_level == 0:
             return  {
                 "prev": [
-                    {"text": "Think you can match my memory, Paul? Prove it!"},
-                    {"text": "Try to pick up a couple of cards and see what happens"}
+                    {"text": "Think you can match my memory, Paul? Prove it!."},
+                    {"text": "Try to pick up a couple of cards and see what happens."}
                 ],
                 "post": [
                     {"text": "Okay, you win! Let's start with the tree."},
-                    {"text": "Let me introduce to you my friend to play too"},
+                    {"text": "Let me introduce to you my friend to play too."},
                 ]
             }
         if num_level == 1:
             return {
                 "prev": [
-                    {"text": "Nice to meet you Paul!"}
-                    {"text": "I’ve got the next challenge for you. Let’s see!"}
+                    {"text": "Nice to meet you Paul!."},
+                    {"text": "I’ve got the next challenge for you. Let’s see!."}
                 ],
                 "post": [
                     {"text": "You’re good, Paul! The tree’s in place."},
-                    {"text": "Good luck with the next one :)"}
+                    {"text": "Good luck with the next one :)."}
                 ]
             }
         if num_level == 2:
             return {
                 "prev": [
-                    {"text": "Adding people is no easy feat. Are you ready?"}
+                    {"text": "Adding people is no easy feat. Are you ready?."}
                 ],
                 "post": [
                     {"text": "Nice one! The valley feels livelier now."}
@@ -147,7 +147,7 @@ class Settings:
         if num_level == 3:
             return {
                 "prev": [
-                    {"text": "Let’s test your skills again. People need cheering!"}
+                    {"text": "Let’s test your skills again. People need cheering!."}
                 ],
                 "post": [
                     {"text": "Great job! Everyone’s ready for more fun."}
