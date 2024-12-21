@@ -63,6 +63,9 @@ class WinHistoryState(game_state.GameState):
             ]
 
         if self.is_last_level_completed:
+            self.settings.sfx["bg_sound"].stop()
+            self.settings.sfx["win"].play()
+
             self.current_mushroom = self.settings.mushroom_by_level(self.current_level - 1)
             self.dialog.avatar = self.dialog.prepare_avatar(self.current_mushroom["img"])
             self.current_bg = pygame.image.load(self.settings.bg_by_level(self.current_level))
@@ -72,8 +75,7 @@ class WinHistoryState(game_state.GameState):
                 self.next_bg,
             )
             dialogs = [
-                *self.settings.get_dialogue_by_level(self.current_level - 1)['post'],
-                {"text": "Thanks for playing :D"}
+                *self.settings.get_dialogue_by_level(self.current_level - 1)['post']
             ]
         
         self.dialog.set_dialogue(dialogs)
@@ -100,6 +102,8 @@ class WinHistoryState(game_state.GameState):
             self.restart_btn.options["text_color"] = self.default_btn_bg_color
 
             # restart and go the level 0
+            self.settings.sfx["win"].stop()
+            self.settings.sfx["bg_sound"].play()
             state_manager.settings.game_data["level"] = 0
             state_manager.set_state(GAME_STATES.GAMEPLAY)
 

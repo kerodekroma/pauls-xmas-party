@@ -55,6 +55,7 @@ class GamePlayBoardOfCards():
         return result
 
     def handle_events(self, event, state_manager):
+        settings = state_manager.settings
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.is_ai_player_turn == False:
                 pos = pygame.mouse.get_pos()
@@ -63,6 +64,7 @@ class GamePlayBoardOfCards():
                 for index, card in enumerate(self.cards):
                     if card.rect.collidepoint(pos) and not card.is_flipped:
                         card.flip()
+                        settings.sfx['click_card'].play()
                         self.flipped_cards.append(index)
                         break
 

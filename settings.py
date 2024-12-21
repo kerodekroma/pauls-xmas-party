@@ -1,3 +1,5 @@
+import pygame
+
 import toolbox.colors as colors
 import toolbox.font as font
 
@@ -20,6 +22,12 @@ class Settings:
         GAME_AREA_HEIGHT = self.WINDOW_HEIGHT - self.HEADER_HEIGHT
         self.CARD_WIDTH = (GAME_AREA_WIDTH - (self.COLS + 1) * self.MARGIN) // self.COLS
         self.CARD_HEIGHT = (GAME_AREA_HEIGHT - (self.ROWS + 1) * self.MARGIN) // self.ROWS
+
+        self.sfx = {
+            'bg_sound': pygame.mixer.Sound('./assets/sound/bg_sound.ogg'),
+            'click_card': pygame.mixer.Sound('./assets/sound/click_card.ogg'),
+            'win': pygame.mixer.Sound('./assets/sound/win.ogg'),
+        }
 
         # assets
         self.IMG_INTRO = './assets/img/pauls-xmas-party-cover.png'
@@ -61,7 +69,7 @@ class Settings:
             './assets/img/mushroom_04.png': 3,
         }
 
-        self.MUSHROOM_NAMES = ['MUSHY KIDO', 'MR MUFFIN', 'MURNOLD CHAD', 'GRAND MUSHMA']
+        self.MUSHROOM_NAMES = ['MUSHY KIDO', 'MR MUFFIN', 'MUSH CHAD', 'MUSHMAMA']
         # global state
         self.game_data = {
             'level': 0,
@@ -127,21 +135,23 @@ class Settings:
         if num_level == 1:
             return {
                 "prev": [
-                    {"text": "Nice to meet you Paul!."},
-                    {"text": "I’ve got the next challenge for you. Let’s see!."}
+                    {"text": "Nice to meet you Paul!"},
+                    {"text": "I got the next challenge for you. Let's a go!."}
                 ],
                 "post": [
-                    {"text": "You’re good, Paul! The tree’s in place."},
-                    {"text": "Good luck with the next one :)."}
+                    {"text": "You’re good, Paul! The tree is in place."},
+                    {"text": "Good luck with the next one :)"}
                 ]
             }
         if num_level == 2:
             return {
                 "prev": [
-                    {"text": "Adding people is no easy feat. Are you ready?."}
+                    {"text": "Ey, wanna play?"},
+                    {"text": "Adding decorations is no easy feat. Are you ready?."}
                 ],
                 "post": [
-                    {"text": "Nice one! The valley feels livelier now."}
+                    {"text": "Nice one! The valley feels livelier now."},
+                    {"text": "Now, It's turn to play with a legend..."}
                 ]
             }
         if num_level == 3:
@@ -150,7 +160,8 @@ class Settings:
                     {"text": "Let’s test your skills again. People need cheering!."}
                 ],
                 "post": [
-                    {"text": "Great job! Everyone’s ready for more fun."}
+                    {"text": "Great job! Everyone’s ready for more fun."},
+                    {"text": "Thanks for playing!"},
                 ]
             }
         return {"prev":[], "post":[]}

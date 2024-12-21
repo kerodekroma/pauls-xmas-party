@@ -60,6 +60,13 @@ class App:
 
     self.bg_color = SETTINGS.palette[40]
 
+    # setup the sounds
+    SETTINGS.sfx["bg_sound"].set_volume(0.4)
+    SETTINGS.sfx["click_card"].set_volume(0.5)
+    SETTINGS.sfx["win"].set_volume(0.4)
+
+    SETTINGS.sfx["bg_sound"].play(-1)
+
   async def render(self):
     while True:
         for event in pygame.event.get():
