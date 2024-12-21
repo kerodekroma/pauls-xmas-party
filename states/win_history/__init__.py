@@ -20,8 +20,10 @@ class WinHistoryState(game_state.GameState):
         self.settings = state_manager.settings
         self.unit = self.settings.UNIT
         self.current_level = self.settings.game_data['level'] 
-        # self.is_last_level_completed = self.current_level == self.settings.game_data['max_level']
-        self.is_last_level_completed = True
+        self.is_last_level_completed = self.current_level == self.settings.game_data['max_level']
+        # START DEBUG
+        # self.is_last_level_completed = True
+        # END DEBUG
         self.image_transition = ImageTransition(60)
 
         # FINAL SCREEN
@@ -77,10 +79,11 @@ class WinHistoryState(game_state.GameState):
         self.dialog.set_dialogue(dialogs)
 
     def handle_events(self, event, state_manager):
-        # debug
+        # START DEBUG: go to gameplay right away
         # if event.type == pygame.KEYUP:
         #     if event.key == pygame.K_SPACE and state_manager.current_state_name == GAME_STATES.WIN_HISTORY:
         #             state_manager.set_state(GAME_STATES.GAMEPLAY)
+        # END DEBUG
         
         self.dialog.handle_event(event)
 
