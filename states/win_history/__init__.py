@@ -65,6 +65,16 @@ class WinHistoryState(game_state.GameState):
         
         self.dialog.handle_event(event)
 
+    def render_ending(self, screen, state_manager):
+        pixel_font = self.settings.font['pixel']
+        palette = state_manager.settings.palette
+        text_content = f"""
+             Win History here, press space to continue {self.current_level}
+        """
+        text_surface = pixel_font.render(text_content, True, palette[8])
+        text_rect = text_surface.get_rect(center=(state_manager.settings.WINDOW_WIDTH/2, 50))
+        screen.blit(text_surface, text_rect)
+
     def render(self, screen, state_manager):
         # pixel_font = self.settings.font['pixel']
         # palette = state_manager.settings.palette
@@ -80,6 +90,9 @@ class WinHistoryState(game_state.GameState):
         self.image_transition.render(screen)
 
         self.dialog.update(screen)
+
+        if not self.dialog.show_dialogue and self.is_last_level_completed:
+            self.render_ending(screen, state_manager)
 
         if not self.dialog.show_dialogue and not self.is_last_level_completed:
             state_manager.set_state(GAME_STATES.GAMEPLAY)
