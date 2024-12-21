@@ -50,15 +50,6 @@ class GamePlayState(game_state.GameState):
         self.dialog_intro.set_dialogue(self.settings.get_dialogue_by_level(self.current_level)['prev'])
         self.dialog_intro.avatar = self.dialog_intro.prepare_avatar(mushroom_intro["img"])
 
-        # self.dialogue_win = DialogueSystem(
-        #     self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
-        # # dialoguess
-        # self.win_dialogue = [
-        #     {"text": "You WIN!"},
-        #     {"text": "time for another match!"}
-        # ]
-        # self.dialogue_win.set_dialogue(self.win_dialogue)
-
         self.dialogue_lose = DialogueSystem(
             self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
         self.dialogue_lose.avatar = self.dialogue_lose.prepare_avatar(mushroom_intro['img'])
@@ -78,13 +69,13 @@ class GamePlayState(game_state.GameState):
         self.dialogue_draw.set_dialogue(self.draw_dialogue)
 
     def handle_events(self, event, state_manager):
-        # START debugging
-        # if event.type == pygame.KEYUP:
-        #     if event.key == pygame.K_SPACE and state_manager.current_state_name == GAME_STATES.GAMEPLAY:
-        #         if not self.is_all_levels_win:
-        #             self.settings.game_data['level'] += 1
-        #             state_manager.set_state(GAME_STATES.WIN_HISTORY)
-        #         return
+        # START debugging jumping LEVELS
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE and state_manager.current_state_name == GAME_STATES.GAMEPLAY:
+                if not self.is_all_levels_win:
+                    self.settings.game_data['level'] += 1
+                    state_manager.set_state(GAME_STATES.WIN_HISTORY)
+                return
         # END debugging
 
         self.board.handle_events(event, state_manager)
