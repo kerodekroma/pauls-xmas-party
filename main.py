@@ -43,15 +43,16 @@ class App:
     # state manager
     self.st_manager = StateManager(SETTINGS)
     self.st_manager.add_state(GAME_STATES.MAIN_MENU, MainMenuState(self.st_manager))
-    self.st_manager.add_state(GAME_STATES.INIT_HISTORY, InitialHistoryState(self.st_manager))
-    self.st_manager.add_state(GAME_STATES.PICK_PLAYER, PickPlayerState(self.st_manager))
-    self.st_manager.add_state(GAME_STATES.TOURNAMENT_TREE, TournamentTreeState(self.st_manager))
+    # self.st_manager.add_state(GAME_STATES.INIT_HISTORY, InitialHistoryState(self.st_manager))
+    # self.st_manager.add_state(GAME_STATES.PICK_PLAYER, PickPlayerState(self.st_manager))
+    # self.st_manager.add_state(GAME_STATES.TOURNAMENT_TREE, TournamentTreeState(self.st_manager))
     self.st_manager.add_state(GAME_STATES.GAMEPLAY, GamePlayState(self.st_manager))
     self.st_manager.add_state(GAME_STATES.WIN_HISTORY, WinHistoryState(self.st_manager))
-    self.st_manager.add_state(GAME_STATES.LOSE_HISTORY, LoseHistoryState(self.st_manager))
+    # self.st_manager.add_state(GAME_STATES.LOSE_HISTORY, LoseHistoryState(self.st_manager))
 
     # setting up the default state
     self.st_manager.set_state(GAME_STATES.MAIN_MENU)
+    # self.st_manager.set_state(GAME_STATES.WIN_HISTORY)
     # self.st_manager.set_state('gameplay')
 
     # setting the clock
